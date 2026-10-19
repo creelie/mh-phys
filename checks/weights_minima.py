@@ -1,5 +1,5 @@
 """Local minima of the weighted window function for a rational weights file.
-usage: python3 -I weights_minima.py R weights.txt   (weights_minima8.txt: R = 8, verify/weights8.txt)"""
+usage: python3 -I weights_minima.py R weights.txt   (weights_minima9.txt: R = 9, verify/weights9.txt; weights_minima8.txt: R = 8, verify/weights8.txt)"""
 import itertools, sys, numpy as np
 from scipy.optimize import minimize
 s2 = np.sqrt(2.0); K0 = s2*np.sin(1/s2); t0 = 1/(s2*np.pi)
