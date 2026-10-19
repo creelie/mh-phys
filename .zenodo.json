@@ -1,7 +1,7 @@
 {
-  "title": "More Than 67.31 Percent of the Zeta Zeros Are Simple and on the Critical Line",
+  "title": "More Than 67.32 Percent of the Zeta Zeros Are Simple and on the Critical Line",
   "upload_type": "software",
-  "description": "Paper (REVTeX source and PDF) and verification code. We prove that more than 67.31 percent of the nontrivial zeros of the Riemann zeta function, counted with multiplicity, are simple and lie on the critical line: liminf N_0^s(T,2T)/N(T,2T) >= (4000/3981)(H - 12499/5000000) = 0.6731985970, where H = 0.6725007 is the Montgomery-Taylor constant (release 1.0.0 gave 0.6731133552). The ingredients are a sharp bound for the largest eigenvalue of the overlap matrix of zeros at mutual distance at least 11/20, which lets long blocks of zeros be used in full, and a window inequality for eight consecutive zeros in which every pair and every gap carries its own weight, chosen by linear programming. The inequality is verified by branch and bound in interval arithmetic (21,067,790,614 nodes), over a table of kernel bounds computed in 128-bit ball arithmetic. No weights for eight zeros give more than 0.6732159, and no window length or weights lift the method above 0.67357. The Riemann hypothesis is not proved and the result does not bear on it. The route was found with the learn-from-failure protocol of the BLLM engine Anaxia (creelie/eBLLM, release 3.0.5, doi:10.5281/zenodo.23469389).",
+  "description": "Paper (REVTeX source and PDF) and verification code. We prove that more than 67.32 percent of the nontrivial zeros of the Riemann zeta function, counted with multiplicity, are simple and lie on the critical line: liminf N_0^s(T,2T)/N(T,2T) >= (1000/993)(H - 19999/5000000) = 0.6732133974, where H = 0.6725007 is the Montgomery-Taylor constant (release 1.0.0 gave 0.6731133552 and release 1.1.0 gave 0.6731985970). The ingredients are a sharp bound for the largest eigenvalue of the overlap matrix of zeros at mutual distance at least 11/20, which lets long blocks of zeros be used in full, and a window inequality for nine consecutive zeros in which every pair and every gap carries its own weight, chosen by linear programming. The inequality F >= 7/1000 is verified by branch and bound in interval arithmetic (52,891,178,741 nodes), over a table of kernel bounds computed in 128-bit ball arithmetic. No weights for nine zeros give more than 0.6732646, and no window length or weights lift the method above 0.67357. The Riemann hypothesis is not proved and the result does not bear on it. The route was found with the learn-from-failure protocol of the BLLM engine Anaxia (creelie/eBLLM, release 3.0.5, doi:10.5281/zenodo.23469389).",
   "creators": [
     {
       "name": "Bhattacharjee, Deep",
@@ -33,11 +33,11 @@
       "scheme": "arxiv"
     },
     {
-      "identifier": "10.5281/zenodo.23480715",
+      "identifier": "10.5281/zenodo.23483313",
       "relation": "isNewVersionOf",
       "scheme": "doi"
     }
   ],
   "access_right": "open",
-  "version": "1.1.0"
+  "version": "1.2.0"
 }

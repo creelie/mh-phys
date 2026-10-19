@@ -1,7 +1,7 @@
 """Weighted windows with analytic gradients and mirror-symmetric weights.
 F(g) = sum_i b_i g_i + sum_{r,i} a[r][i] w(y_{i+r}-y_i), sum_i a[r][i] <= 2, sum_i b_i = mu, a, b >= 0.
 Cutting planes: LP over the weights against local minimisers of the current F.
-usage: python3 -I weights_lp.py R mu iterations bmin_frac procs   (Table I: weights_lp.py 8 0.0025 45 0.2 4)
+usage: python3 -I weights_lp.py R mu iterations bmin_frac procs   (Table I: weights_lp.py 9 0.004 45 0.2 4; eight points: 8 0.0025 45 0.2 4)
 Every iteration saves the best weights and the cuts to ww_R<R>_mu<mu>.npz (and resumes from it).
 b_i >= bmin_frac*mu/n keeps every linear weight positive, which the verifier needs."""
 import itertools, os, sys, time, numpy as np
