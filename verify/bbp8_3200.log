@@ -1,0 +1,27 @@
+R=8 G=4000 cells=46000 T=0.0041600000000000005 cutoff_cells=53249 components=2: [3756,4877] [7080,53248]
+work boxes after presplit: 222858
+progress 11142/222858 work boxes
+progress 22284/222858 work boxes
+progress 33426/222858 work boxes
+progress 44568/222858 work boxes
+progress 55710/222858 work boxes
+progress 66852/222858 work boxes
+progress 77994/222858 work boxes
+progress 89136/222858 work boxes
+progress 100278/222858 work boxes
+progress 111420/222858 work boxes
+progress 122562/222858 work boxes
+progress 133704/222858 work boxes
+progress 144846/222858 work boxes
+progress 155988/222858 work boxes
+progress 167130/222858 work boxes
+progress 178272/222858 work boxes
+progress 189414/222858 work boxes
+progress 200556/222858 work boxes
+progress 211698/222858 work boxes
+progress 222840/222858 work boxes
+VERIFIED R=8: F >= 416/100000 with mu0=1/3200; grid=4000 threads=2 nodes=10039560518
+
+real	15m14.708s
+user	17m56.421s
+sys	0m0.849s

@@ -1,0 +1,32 @@
+name: verify
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  certificate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install
+        run: python3 -m pip install python-flint==0.9.0 numpy scipy
+      - name: Rebuild the kernel tables and compare them with the stored ones
+        shell: bash
+        run: |
+          python3 -I verify/table.py 4000 80000 w80k_check.bin
+          cmp w80k_check.bin verify/w4000_80k.bin
+          cmp <(head -c 368000 w80k_check.bin) verify/w4000.bin
+          sha256sum verify/w4000.bin verify/w4000_80k.bin
+      - name: Eigenvalue lemma
+        run: python3 -I checks/eig_lemma.py
+      - name: Branch and bound, eight zeros, mu0 = 1/3200, c0 = 13/3125
+        run: |
+          gcc -O2 -frounding-math -fopenmp -o bbp verify/bbp.c -lm
+          OMP_NUM_THREADS=$(nproc) ./bbp 8 4000 verify/w4000.bin 1 3200 13 3125 | tee run.log
+          grep -q '^VERIFIED R=8' run.log
