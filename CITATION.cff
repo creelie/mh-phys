@@ -1,0 +1,15 @@
+cff-version: 1.2.0
+message: "If you use this work, please cite it as below."
+title: "More Than 67.31 Percent of the Zeta Zeros Are Simple and on the Critical Line"
+authors:
+  - family-names: Bhattacharjee
+    given-names: Deep
+    orcid: "https://orcid.org/0000-0003-0466-750X"
+    email: itsdeep@live.com
+  - family-names: Bhattacharya
+    given-names: Ushashi
+    orcid: "https://orcid.org/0009-0002-2254-3914"
+version: 1.0.0
+date-released: 2026-10-19
+repository-code: "https://github.com/creelie/mh-phys"
+license: MIT

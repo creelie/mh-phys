@@ -1,0 +1,15 @@
+*.aux
+*.log
+*.out
+*.fls
+*.fdb_latexmk
+*.bbl
+*.blg
+*Notes.bib
+*.toc
+bbp
+bb
+__pycache__/
+*.synctex.gz
+!verify/*.log
+!ceiling/*.log

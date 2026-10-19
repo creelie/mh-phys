@@ -1,0 +1,80 @@
+name: farm
+# Branch-and-bound certificate of the window inequality F_R >= T, split into shards across runners.
+# Every shard rebuilds the same list of work boxes (same code, table and arithmetic) and searches its residue
+# class; the final job checks that every shard verified with the same box count and checksum.
+on:
+  workflow_dispatch:
+    inputs:
+      R: {description: "window length", required: true, default: "9"}
+      G: {description: "table grid", required: true, default: "4000"}
+      mu0: {description: "mu0 as num/den", required: true, default: "1/2400"}
+      T: {description: "threshold as num/den", required: true, default: "74/12500"}
+      target: {description: "presplit target", required: true, default: "2000000"}
+      shards: {description: "number of shards (at most 256)", required: true, default: "64"}
+      table: {description: "table of lower bounds of w", required: true, default: "verify/w4000_80k.bin"}
+permissions:
+  contents: read
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    outputs:
+      idx: ${{ steps.p.outputs.idx }}
+    steps:
+      - id: p
+        env: {N: "${{ inputs.shards }}"}
+        run: echo "idx=$(python3 -c "import os,json;print(json.dumps(list(range(int(os.environ['N'])))))")" >> "$GITHUB_OUTPUT"
+  shard:
+    needs: plan
+    runs-on: ubuntu-latest
+    timeout-minutes: 340
+    strategy:
+      fail-fast: true
+      matrix:
+        i: ${{ fromJSON(needs.plan.outputs.idx) }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Search one shard
+        env:
+          R: ${{ inputs.R }}
+          G: ${{ inputs.G }}
+          MU0: ${{ inputs.mu0 }}
+          T: ${{ inputs.T }}
+          TARGET: ${{ inputs.target }}
+          N: ${{ inputs.shards }}
+          I: ${{ matrix.i }}
+          TAB: ${{ inputs.table }}
+        run: |
+          gcc -O2 -frounding-math -fopenmp -o bbp verify/bbp.c -lm
+          set -o pipefail
+          OMP_NUM_THREADS=$(nproc) ./bbp "$R" "$G" "$TAB" "${MU0%/*}" "${MU0#*/}" "${T%/*}" "${T#*/}" "$TARGET" "$I" "$N" | tee "shard_$I.log"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: shard-${{ matrix.i }}
+          path: shard_${{ matrix.i }}.log
+  collect:
+    needs: shard
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: logs
+          merge-multiple: true
+      - name: Check every shard
+        env: {N: "${{ inputs.shards }}"}
+        run: |
+          python3 - <<'PY'
+          import glob, os, re, sys
+          n = int(os.environ["N"]); seen = {}; boxes = set(); sums = set(); nodes = 0; covered = 0
+          for f in sorted(glob.glob("logs/shard_*.log")):
+              t = open(f).read()
+              m = re.search(r"VERIFIED SHARD (\d+)/(\d+) .* on (\d+) of (\d+) work boxes \(checksum=([0-9a-f]+)\).*nodes=(\d+)", t)
+              if not m: sys.exit(f"{f}: not verified")
+              i, c, mine, tot, h, nd = m.groups()
+              seen[int(i)] = 1; boxes.add(int(tot)); sums.add(h); nodes += int(nd); covered += int(mine)
+              assert int(c) == n
+          assert sorted(seen) == list(range(n)), "missing shards"
+          assert len(boxes) == 1 and len(sums) == 1, "shards disagree on the work boxes"
+          assert covered == boxes.pop(), "shards do not cover the work boxes"
+          print(f"VERIFIED all {n} shards; checksum {sums.pop()}; nodes {nodes}")
+          PY
