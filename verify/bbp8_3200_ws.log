@@ -1,0 +1,7 @@
+R=8 G=4000 cells=46000 T=0.0041600000000000005 cutoff_cells=53249 components=2: [3756,4877] [7080,53248]
+work boxes after presplit: 222858 checksum=d5746ef8030b2d5c
+VERIFIED R=8: F >= 13/3125 with mu0=1/3200; grid=4000 threads=4 nodes=10039560518
+
+real	4m44.609s
+user	18m35.330s
+sys	0m0.377s

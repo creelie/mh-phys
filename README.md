@@ -3,7 +3,7 @@
 Deep Bhattacharjee (ORCID [0000-0003-0466-750X](https://orcid.org/0000-0003-0466-750X); itsdeep@live.com, d.bhattacharjee@erl-forschung.de)
 and Ushashi Bhattacharya (ORCID [0009-0002-2254-3914](https://orcid.org/0009-0002-2254-3914)).
 
-Archived on Zenodo: DOI to be added after the first release.
+Archived on Zenodo: release 1.0.0 [doi:10.5281/zenodo.23480715](https://doi.org/10.5281/zenodo.23480715); all versions [doi:10.5281/zenodo.23480714](https://doi.org/10.5281/zenodo.23480714).
 
 This repository contains the paper *More Than 67.31 Percent of the Zeta Zeros
 Are Simple and on the Critical Line* (`tex/main.tex`, compiled to `main.pdf`;
