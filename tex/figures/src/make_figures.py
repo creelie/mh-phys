@@ -108,8 +108,8 @@ e = np.array([0.0033696, 0.0038696, 0.0043102, 0.0047403, 0.0051570, 0.0055737, 
 fig, axs = plt.subplots(1, 2, figsize=(8, 3.1), gridspec_kw=dict(width_ratios=[1.15, 1]))
 ax = axs[0]
 names = ["Levinson\n1974", "Conrey\n1989", "Bui, Conrey,\nYoung 2011", "Pratt et al.\n2020", "Alpöge,\nFurman 2026", "this\npaper"]
-vals = [1/3, 2/5, 0.41, 5/12, H, 0.6731134]
-shown = ["1/3", "2/5", "41%", "5/12", "67.25%", "67.31%"]
+vals = [1/3, 2/5, 0.41, 5/12, H, 0.6731985]
+shown = ["1/3", "2/5", "41%", "5/12", "67.25%", "67.319%"]
 cols = [GREY]*4 + [BLUE, RED]
 ax.bar(range(len(vals)), vals, color=cols, width=0.65)
 for i, v in enumerate(vals): ax.text(i, v + 0.01, shown[i], ha="center", fontsize=7.5)
@@ -117,12 +117,51 @@ ax.set_xticks(range(len(vals))); ax.set_xticklabels(names, fontsize=6.5); ax.set
 ax.set_ylabel("proportion of zeros"); ax.set_title("(a) zeros on the line: all (grey), simple (colour)", fontsize=10)
 ax = axs[1]
 ax.plot(mu*1e3, (H - mu)/(1 - e), "s-", color=GREY, ms=2.2, lw=1, label="chain limit of the method")
-ax.plot([7/2000*1e3], [0.6730728], "o", color=BLUE, ms=5, label=r"$R=8$, $\mu_0=1/2000$")
-ax.plot([7/3200*1e3], [0.6731134], "o", color=RED, ms=5, label=r"$R=8$, $\mu_0=1/3200$")
+mu8 = np.array([0.0015, 0.002, 0.0025, 0.003, 0.0035, 0.004])
+ax.plot(mu8*1e3, [0.6731514, 0.6732079, 0.6732159, 0.6732240, 0.6732320, 0.6732400], "--", color=ORANGE, lw=1.1, label="limit for eight points")
+ax.plot([7/2000*1e3], [0.6730728], "o", color=BLUE, ms=5, label=r"$R=8$, uniform, $\mu_0=1/2000$")
+ax.plot([7/3200*1e3], [0.6731134], "o", color=GREEN, ms=5, label=r"$R=8$, uniform, $\mu_0=1/3200$")
+ax.plot([0.0024998*1e3], [0.6731985], "o", color=RED, ms=5, label=r"$R=8$, optimised weights")
 ax.axhline(0.6730085, color=GREEN, lw=0.9, ls="--"); ax.text(4.3, 0.67303, "seven-point bound", fontsize=7, color=GREEN)
 ax.axhline(H, color=BLUE, lw=0.9, ls=":"); ax.text(2.0, 0.67253, r"$H_{\mathrm{MT}}$", fontsize=8, color=BLUE)
-ax.set_xlabel(r"$\mu=(R-1)\mu_0$ ($\times10^{-3}$)"); ax.set_ylim(0.6724, 0.6737)
+ax.set_xlabel(r"linear total $\mu$ of the weights ($\times10^{-3}$)"); ax.set_ylim(0.6724, 0.6737)
 ax.legend(frameon=False, fontsize=7, loc="center right", bbox_to_anchor=(1.0, 0.3)); ax.set_title("(b) the windows and the chain", fontsize=10)
 ax.ticklabel_format(axis="y", useOffset=False)
 fig.subplots_adjust(left=0.08, right=0.99, bottom=0.2, top=0.9, wspace=0.32)
 save(fig, "fig_limits.png")
+
+# Figure 5: the weights of the eight-point window and its extremal configurations (checks/wmins.py)
+WA = {(1, 0): 0.16351, (1, 1): 0.27362, (1, 2): 0.34233, (1, 3): 0.44104, (1, 4): 0.34233, (1, 5): 0.27362, (1, 6): 0.16351, (2, 0): 0.12781, (2, 1): 0.58273, (2, 2): 0.28944, (2, 3): 0.28944, (2, 4): 0.58273, (2, 5): 0.12781, (3, 0): 0.0, (3, 1): 0.65602, (3, 2): 0.68794, (3, 3): 0.65602, (3, 4): 0.0, (4, 0): 1.0, (4, 1): 0.0, (4, 2): 0.0, (4, 3): 1.0, (5, 0): 0.55235, (5, 1): 0.89528, (5, 2): 0.55235, (6, 0): 1.0, (6, 1): 1.0, (7, 0): 2.0}
+WB = [0.0002663, 0.0003638, 0.0003741, 0.0004914, 0.0003741, 0.0003638, 0.0002663]
+MINS = [(1.040, 1.976, 1.044, 1.990, 1.988, 1.044, 1.987), (1.987, 1.044, 1.988, 1.990, 1.044, 1.976, 1.040),
+        (1.039, 1.978, 1.042, 1.976, 1.042, 1.978, 1.039), (1.981, 1.040, 1.976, 1.042, 1.976, 1.040, 1.981),
+        (1.031, 1.038, 1.984, 1.986, 1.044, 1.975, 1.039), (1.039, 1.975, 1.044, 1.986, 1.984, 1.038, 1.031),
+        (1.981, 1.042, 1.975, 1.043, 1.991, 1.988, 1.039), (1.039, 1.988, 1.991, 1.043, 1.975, 1.042, 1.981)]
+fig, axs = plt.subplots(1, 2, figsize=(8, 3.2), gridspec_kw=dict(width_ratios=[1.25, 1]))
+ax = axs[0]
+y = np.concatenate([[0], np.cumsum(MINS[2])])
+for (r, i), wt in sorted(WA.items(), key=lambda t: -t[1]):
+    if wt <= 0: continue
+    c, h = (y[i] + y[i + r])/2, (y[i + r] - y[i])/2
+    t = np.linspace(0, np.pi, 100)
+    ax.plot(c + h*np.cos(t), 0.42*h*np.sin(t), color=cm.viridis(0.15 + 0.4*wt), lw=0.6 + 2.6*wt, alpha=0.85, solid_capstyle="round")
+for i in range(7):
+    ax.bar((y[i] + y[i + 1])/2, -WB[i]*700, width=0.5, color=ORANGE, alpha=0.8)
+ax.plot(y, np.zeros(8), "o", color="black", ms=5, zorder=5)
+for i in range(8): ax.text(y[i], -0.47, f"$y_{i}$", ha="center", va="top", fontsize=7.5)
+ax.text(y[-1] + 0.25, -0.2, r"$b_i$", color=ORANGE, fontsize=8)
+ax.set_xlim(-0.4, y[-1] + 0.7); ax.set_ylim(-0.7, 2.6); ax.axis("off")
+ax.set_title("(a) pair weights $a_{r,i}$ (arcs) and linear weights $b_i$ (bars)", fontsize=10)
+ax = axs[1]
+for j, g in enumerate(MINS):
+    yy = np.concatenate([[0], np.cumsum(g)])
+    ax.plot(yy, np.full(8, -j), "-", color=GREY, lw=0.8)
+    for i in range(7):
+        ax.plot([yy[i], yy[i + 1]], [-j, -j], color=(BLUE if g[i] < 1.5 else RED), lw=3, alpha=0.75, solid_capstyle="butt")
+    ax.plot(yy, np.full(8, -j), "o", color="black", ms=3.2, zorder=5)
+ax.text(0.2, 0.75, "gap near 1.04", color=BLUE, fontsize=7.5); ax.text(5.6, 0.75, "gap near 1.98", color=RED, fontsize=7.5)
+ax.set_ylim(-7.6, 1.3); ax.set_yticks([]); ax.spines["left"].set_visible(False)
+ax.set_xlabel("position of the zeros (mean spacing 1)")
+ax.set_title("(b) the eight extremal configurations", fontsize=10)
+fig.subplots_adjust(left=0.01, right=0.99, bottom=0.16, top=0.88, wspace=0.08)
+save(fig, "fig_weights.png")

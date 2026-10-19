@@ -9,7 +9,7 @@ authors:
   - family-names: Bhattacharya
     given-names: Ushashi
     orcid: "https://orcid.org/0009-0002-2254-3914"
-version: 1.0.0
+version: 1.1.0
 date-released: 2026-10-19
 repository-code: "https://github.com/creelie/mh-phys"
 doi: 10.5281/zenodo.23480714
