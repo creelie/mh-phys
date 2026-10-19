@@ -8,7 +8,7 @@ permissions:
 jobs:
   certificate:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 150
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -30,3 +30,8 @@ jobs:
           gcc -O2 -frounding-math -fopenmp -o bbp verify/bbp.c -lm
           OMP_NUM_THREADS=$(nproc) ./bbp 8 4000 verify/w4000.bin 1 3200 13 3125 | tee run.log
           grep -q '^VERIFIED R=8' run.log
+      - name: Branch and bound, eight zeros, weights of Table I, c0 = 19/4000
+        run: |
+          gcc -O2 -frounding-math -fopenmp -o bbp_ww verify/bbp_ww.c -lm
+          OMP_NUM_THREADS=$(nproc) ./bbp_ww 8 4000 verify/w4000_80k.bin verify/weights8.txt 19 4000 400000 | grep -v '^progress' | tee runw.log
+          grep -q '^VERIFIED R=8' runw.log

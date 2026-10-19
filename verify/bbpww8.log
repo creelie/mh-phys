@@ -1,0 +1,15 @@
+# ./bbp_ww 8 4000 verify/w4000_80k.bin verify/weights8.txt 19 4000 400000  (4 threads, 19 Oct 2026)
+R=8 G=4000 cells=80000 T=0.0047500000000000007
+  gap 1: cutoff_cells=71349 components=2: [3578,5370] [6460,71126]
+  gap 2: cutoff_cells=52227 components=2: [3717,4958] [6973,52201]
+  gap 3: cutoff_cells=50789 components=3: [3767,4855] [7111,9809] [10098,49443]
+  gap 4: cutoff_cells=38666 components=3: [3823,4752] [7264,9254] [10700,37083]
+  gap 5: cutoff_cells=50789 components=3: [3767,4855] [7111,9809] [10098,49443]
+  gap 6: cutoff_cells=52227 components=2: [3717,4958] [6973,52201]
+  gap 7: cutoff_cells=71349 components=2: [3578,5370] [6460,71126]
+work boxes after presplit: 417856 checksum=01d7104a97e10c27
+VERIFIED R=8: F >= 19/4000 with weights w8_25.txt; grid=4000 threads=4 nodes=21067790614
+
+real	25m53.604s
+user	38m51.644s
+sys	0m1.230s

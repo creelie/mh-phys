@@ -46,7 +46,7 @@
 \DeclareMathOperator{\tr}{tr}
 \DeclareMathOperator{\rank}{rank}
 \DeclareMathOperator{\spanop}{span}
-\def\zenodoID{}% version DOI of the Zenodo archive; empty until it is minted
+\def\zenodoID{10.5281/zenodo.23480714}% DOI of the Zenodo archive (all versions)
 \newcommand{\archivelink}{\ifx\zenodoID\empty\url{https://github.com/creelie/mh-phys}%
  \else\href{https://doi.org/\zenodoID}{doi:\zenodoID}\fi}
 
@@ -152,8 +152,8 @@ $0.6730085$~\cite{Ain26}. Our result is the following.
 As $T\to\infty$,
 \begin{align*}
  \liminf_{T\to\infty}\frac{N_0^s(T,2T)}{N(T,2T)}
- &\ge\frac{3125}{3112}\Bigl(H_\MT-\frac7{3200}\Bigr)\\
- &=0.6731133552\ldots .
+ &\ge\frac{4000}{3981}\Bigl(H_\MT-\frac{12499}{5000000}\Bigr)\\
+ &=0.6731985970\ldots .
 \end{align*}
 \end{theorem}
 
@@ -168,9 +168,11 @@ critical line. The grey bars are the proportions of zeros on the line
 proved by mollifiers, in the form stated in the titles of the papers; the
 coloured bars are proportions of zeros that are both simple and on the line.
 (b) The bound $(H_\MT-\mu)/(1-c_0)$ from an inequality for $R$ consecutive
-zeros, against $\mu=(R-1)\mu_0$: the two certified points for $R=8$, the
-seven-point bound of~\cite{Ain26}, the Montgomery--Taylor constant, and the
-upper limit of the method obtained from periodic configurations
+zeros, against the linear total $\mu$ of its weights: the certified points
+for $R=8$ with uniform weights and with the weights of
+Table~\ref{tab:weights}, the seven-point bound of~\cite{Ain26}, the
+Montgomery--Taylor constant, the limit for eight points, and the upper
+limit of the method obtained from periodic configurations
 (Sec.~\ref{sec:limits}).}
 \label{fig:limits}
 \end{figure*}
@@ -192,8 +194,11 @@ are treated separately: they overlap so strongly that a pair of them alone
 has defect at least $0.719$, far more than they cost.
 
 With the cap removed, a block of $m$ zeros has defect proportional to $m$,
-and the remaining question is the energy of eight consecutive zeros. This
-is an inequality in seven variables, which we verify by branch and bound in
+and the remaining question is the energy of eight consecutive zeros. Each
+pair of the eight zeros enters with a weight that depends on its place in
+the window, chosen by linear programming, and with these weights the
+inequality sees nearly all the energy that eight consecutive zeros carry.
+It is an inequality in seven variables, which we verify by branch and bound in
 outward-rounded arithmetic over a table of interval enclosures of the
 kernel (Proposition~\ref{prop:window} and Appendix~\ref{app:verify}). The
 extremal configurations are close to a lattice with gaps near $1.04$ and
@@ -202,7 +207,7 @@ $3.0202$.
 
 The method has a limit. Periodic arrangements of zeros satisfy every
 constraint the argument uses, and their energy shows that no choice of
-window length can push the bound past $0.67357$ (Sec.~\ref{sec:limits}). This
+window length or weights can push the bound past $0.67357$ (Sec.~\ref{sec:limits}). This
 is well below the ceiling $0.6818$ that Alp\"oge and Furman identify for all
 certificates based on pair correlation with Fourier support in
 $[-1,1]$~\cite[\S7.2]{AF26}.
@@ -558,18 +563,35 @@ threshold $2$ of the defect.}
 
 \section{The defect of a block of zeros}\label{sec:blocks}
 
-Fix an integer $R\ge2$ and $\mu_0>0$. For gaps $g=(g_1,\dots,g_{R-1})$ in
-$[0,\infty)^{R-1}$ put $y_0=0$, $y_i=g_1+\dots+g_i$, and
-\begin{equation}\label{eq:FR}
- F_R(g):=\mu_0\sum_{i=1}^{R-1}g_i+\sum_{r=1}^{R-1}\frac2{R-r}
- \sum_{i=0}^{R-1-r}w(y_{i+r}-y_i).
+Fix an integer $R\ge2$. A system of weights for $R$ points consists of
+numbers $b_1,\dots,b_{R-1}>0$ and $a_{r,i}\ge0$, for $1\le r\le R-1$ and
+$0\le i\le R-1-r$, such that
+\begin{equation}\label{eq:weights}
+ \sum_{i=1}^{R-1}b_i=\mu,\qquad
+ \sum_{i=0}^{R-1-r}a_{r,i}\le2\quad(1\le r\le R-1);
 \end{equation}
-The second sum runs over all pairs of the $R$ points $y_0<\dots<y_{R-1}$; a
-pair $r$ steps apart carries the weight $2/(R-r)$.
+we call $\mu$ the linear total of the weights. For gaps
+$g=(g_1,\dots,g_{R-1})$ in $[0,\infty)^{R-1}$ put $y_0=0$,
+$y_i=g_1+\dots+g_i$, and
+\begin{equation}\label{eq:FR}
+ F(g):=\sum_{i=1}^{R-1}b_ig_i+\sum_{r=1}^{R-1}
+ \sum_{i=0}^{R-1-r}a_{r,i}\,w(y_{i+r}-y_i).
+\end{equation}
+The second sum runs over all pairs of the $R$ points $y_0<\dots<y_{R-1}$,
+and the pair $(y_i,y_{i+r})$ carries the weight $a_{r,i}$, which depends on
+its place in the window. The uniform weights $b_i=\mu_0$,
+$a_{r,i}=2/(R-r)$ give the function $F_R$ used in~\cite{Ain26}, with
+$\mu=(R-1)\mu_0$.\footnote{Every system of weights gives the same totals in
+the proof of Lemma~\ref{lem:windows}; what the weights change is the
+minimum of a single window. The extremal configurations of $F_R$ do not
+use all places alike: some pairs sit near a zero of $k$ at every
+near-minimal configuration and contribute almost nothing, while others
+always carry a visible overlap. Moving weight from the first kind of place
+to the second raises the minimum.}
 
 \begin{lemma}\label{lem:windows}
-Suppose that $F_R\ge c_0$ on $[0,\infty)^{R-1}$ and put $\mu=(R-1)\mu_0$.
-Then for all real $y_1<\dots<y_n$,
+Suppose that $F\ge c_0$ on $[0,\infty)^{R-1}$ for a system of weights with
+linear total $\mu$. Then for all real $y_1<\dots<y_n$,
 \[
  2\sum_{i<j}w(y_j-y_i)+\mu\,(y_n-y_1)\ge c_0\,(n-R+1).
 \]
@@ -577,11 +599,13 @@ Then for all real $y_1<\dots<y_n$,
 
 \begin{proof}
 For $n<R$ the right side is not positive. For $n\ge R$, add the inequality
-$F_R\ge c_0$ over the $n-R+1$ windows of $R$ consecutive points. A pair of
-points $r<R$ steps apart lies in at most $R-r$ windows, with weight
-$2/(R-r)$ each time, so its total weight is at most $2$; pairs at least $R$
-steps apart do not occur and $w\ge0$. Each gap lies in at most $R-1$
-windows, so the linear terms add up to at most $\mu(y_n-y_1)$.
+$F\ge c_0$ over the $n-R+1$ windows $y_s,\dots,y_{s+R-1}$ of $R$
+consecutive points. A pair $y_j,y_{j+r}$ with $r<R$ sits at the place
+$i=j-s$ of the window that starts at $s$, and different windows give
+different places, so its total weight is at most $\sum_ia_{r,i}\le2$;
+pairs at least $R$ steps apart do not occur and $w\ge0$. In the same way
+the gap $y_{j+1}-y_j$ is the $i$-th gap of at most one window for each $i$,
+so the linear terms add up to at most $\mu(y_n-y_1)$.
 \end{proof}
 
 For a set $B$ of retained simple zeros, let $G_B$ be its Gram matrix
@@ -590,11 +614,12 @@ $\spanop(B)$ be the difference between the largest and the smallest
 $x_\rho$ in $B$.
 
 \begin{proposition}\label{prop:block}
-Suppose that $F_R\ge c_0$ on $[0,\infty)^{R-1}$ with
+Suppose that $F\ge c_0$ on $[0,\infty)^{R-1}$ for a system of weights with
+linear total $\mu$, and that
 \begin{equation}\label{eq:c0cond}
- (R+1)\,c_0\le\tfrac43\,w(\tfrac{11}{20}),
+ (R+1)\,c_0\le\tfrac43\,w(\tfrac{11}{20}).
 \end{equation}
-and let $\mu=(R-1)\mu_0$. Fix $m\ge R$. Then, uniformly over all sets $B$ of
+Fix $m\ge R$. Then, uniformly over all sets $B$ of
 $m$ consecutive retained simple zeros on the line,
 \[
  \cD(G_B)+\mu\spanop(B)\ge c_0\,(m-R+1)-o(1).
@@ -661,34 +686,87 @@ windows that the clusters cut.}
 \section{Eight consecutive zeros}\label{sec:window}
 
 \begin{proposition}\label{prop:window}
-With $R=8$ and $\mu_0=\frac1{3200}$,
+Let $R=8$ and let $F$ be the function~\eqref{eq:FR} with the weights of
+Table~\ref{tab:weights}, whose linear total is $\mu=\frac{12499}{5000000}$. Then
 \[
- F_8(g)\ge\frac{13}{3125}=0.00416\qquad\text{for all }
- g\in[0,\infty)^7.
+ F(g)\ge\frac{19}{4000}=0.00475\qquad\text{for all }g\in[0,\infty)^7.
 \]
 \end{proposition}
 
+\begin{table}[t]
+\caption{The weights of Proposition~\ref{prop:window}: the pair weights
+$a_{r,i}$ in units of $10^{-5}$ (row $r$, place $i$) and the linear weights
+$b_{i+1}$ in units of $10^{-7}$. Both are unchanged when the window is
+reversed, $a_{r,i}=a_{r,R-1-r-i}$ and $b_i=b_{R-i}$.}
+\label{tab:weights}
+\setlength{\tabcolsep}{3.2pt}
+\begin{tabular}{@{}lrrrrrrr@{}}
+\toprule
+ & $i=0$ & $1$ & $2$ & $3$ & $4$ & $5$ & $6$\\
+\midrule
+$a_{1,i}$ & 16351 & 27362 & 34233 & 44104 & 34233 & 27362 & 16351\\
+$a_{2,i}$ & 12781 & 58273 & 28944 & 28944 & 58273 & 12781 & \\
+$a_{3,i}$ & 0 & 65602 & 68794 & 65602 & 0 &  & \\
+$a_{4,i}$ & 100000 & 0 & 0 & 100000 &  &  & \\
+$a_{5,i}$ & 55235 & 89528 & 55235 &  &  &  & \\
+$a_{6,i}$ & 100000 & 100000 &  &  &  &  & \\
+$a_{7,i}$ & 200000 &  &  &  &  &  & \\
+\midrule
+$b_{i+1}$ & 2663 & 3638 & 3741 & 4914 & 3741 & 3638 & 2663\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=0.96\textwidth]{figures/fig_weights.png}
+\caption{(a) The weights of Table~\ref{tab:weights} over one of the
+extremal configurations of Proposition~\ref{prop:window}: each arc joins
+two of the eight points, with width proportional to its weight $a_{r,i}$,
+and the bars below show the linear weights $b_i$. The pair at the two ends
+carries the full weight $2$, and four pairs carry none. (b) The eight gap
+vectors at which $F$ attains its smallest value $0.0047727$. Every gap is
+close to $1.04$ or to $1.98$, just above or below a zero of $k$, and the
+weights are balanced so that no single arrangement of the two gaps is
+cheaper than the others.}
+\label{fig:weights}
+\end{figure*}
+
 The inequality is verified by a computation in rigorous arithmetic,
 described in full in Appendix~\ref{app:verify}. The search covers the
-whole of $[0,\infty)^7$: if $\sum g_i\ge13.32$ the linear term alone
-exceeds $0.00416$, and on the remaining simplex the domain is subdivided
+whole of $[0,\infty)^7$: the linear term alone exceeds $0.00475$ once
+$\sum b_ig_i\ge\frac{19}{4000}$, and on the remaining simplex the domain is subdivided
 into boxes of grid cells of width $\frac1{4000}$ until a lower bound
-computed from interval enclosures of $w$ settles each box. A local
-minimisation finds the smallest value $0.0041773$, at the gaps
+computed from interval enclosures of $w$ settles each box.
+
+The weights were chosen by linear programming. For a finite set of gap
+vectors, maximising the smallest value of $F$ on the set over all systems
+of weights with linear total $\mu$ is a linear programme. Starting from the
+uniform weights, we added the local minimisers of the current $F$ to the
+set and solved the programme again, for 45 rounds, until its value and the
+smallest local minimum of $F$ agreed to within $10^{-7}$; the weights were
+then rounded down to the decimals of Table~\ref{tab:weights}, which keeps
+\eqref{eq:weights}. The programme spreads the minimum over many
+configurations: a local minimisation from many starting points finds the
+smallest value $0.0047727$, attained to seven decimals at eight different gap
+vectors (Fig.~\ref{fig:weights}), among them
 \[
- (1.0461,\,1.9894,\,1.9868,\,1.0419,\,1.9868,\,1.9894,\,1.0461),
+ (1.039,\,1.978,\,1.042,\,1.976,\,1.042,\,1.978,\,1.039),
 \]
-so the margin is $0.4$ percent.\footnote{The extremal configuration is a
+so the margin is $0.5$ percent. With uniform weights and the same $\mu$ the
+smallest value would be $0.0046290$, which gives only $0.6731165$.\footnote{The extremal configuration is a
 piece of a near-lattice: gaps of about one and two mean spacings, each
 slightly larger than the zero of $k$ near $1$ or below the zero near $2$, so
 that most overlaps vanish and the remaining ones balance the linear term.
 Periodic arrangements of the same two gaps are the extremal chains of
-Sec.~\ref{sec:limits} for the weights near the one used here.} The same search also certifies
-$F_8\ge\frac{605}{100000}$ for $\mu_0=\frac1{2000}$, which gives the
-slightly weaker bound $0.6730727\ldots$ by the argument of
-Sec.~\ref{sec:proof}.
+Sec.~\ref{sec:limits} for values of $\mu$ near the one used here.} With
+uniform weights the same verifier certifies $F_8\ge\frac{13}{3125}$ for
+$\mu_0=\frac1{3200}$ and $F_8\ge\frac{605}{100000}$ for
+$\mu_0=\frac1{2000}$, which give the weaker bounds $0.6731133\ldots$ and
+$0.6730727\ldots$ by the argument of Sec.~\ref{sec:proof}.
 
-The inequality of~\cite{Ain26} is the case $R=7$, $\mu_0=\frac1{3000}$,
+The inequality of~\cite{Ain26} is the case $R=7$ with uniform weights,
+$\mu_0=\frac1{3000}$,
 $c_0=\frac{19}{5000}$. There the defect of a whole block was capped at $1$,
 so blocks could contain at most about $1/c_0$ windows, and a longer window
 gains nothing. Lemma~\ref{lem:eig} removes the cap, so the size of the
@@ -696,9 +774,9 @@ blocks can tend to infinity and the window length can be chosen freely.
 
 \section{Proof of Theorem~\ref{thm:main}}\label{sec:proof}
 
-Take $R=8$, $\mu_0=\frac1{3200}$, $c_0=\frac{13}{3125}$, so that
-$\mu=\frac7{3200}$. Condition~\eqref{eq:c0cond} holds, since
-$9c_0=0.03744<0.4794<\frac43w(\frac{11}{20})$. Fix $m\ge8$ and let
+Take $R=8$ and the weights of Proposition~\ref{prop:window}, so that
+$\mu=\frac{12499}{5000000}$, and $c_0=\frac{19}{4000}$. Condition~\eqref{eq:c0cond} holds, since
+$9c_0=0.04275<0.4794<\frac43w(\frac{11}{20})$. Fix $m\ge8$ and let
 $x_1<\dots<x_{S^\circ}$ be the normalised ordinates of the retained simple
 zeros on the line, so that
 $S^\circ=N_0^s(T,2T)-o(N(T,2T))$ by Lemma~\ref{lem:kernel}. Let $M^\circ$
@@ -727,9 +805,9 @@ Insert this in Corollary~\ref{cor:defect}:
 Divide by $N$ and let $T\to\infty$, and then let $m\to\infty$:
 \[
  \liminf_{T\to\infty}\frac{N_0^s(T,2T)}{N(T,2T)}\ge
- \frac{H_\MT-\mu}{1-c_0}=\frac{3125}{3112}\Bigl(H_\MT-\frac7{3200}\Bigr).
+ \frac{H_\MT-\mu}{1-c_0}=\frac{4000}{3981}\Bigl(H_\MT-\frac{12499}{5000000}\Bigr).
 \]
-The value is $0.6731133552371983\ldots$, computed in ball
+The value is $0.6731985970152340\ldots$, computed in ball
 arithmetic~\cite{Joh17}. \hfill$\square$
 
 \begin{remark}
@@ -742,11 +820,13 @@ zeros of $L(s,\chi)$ on the critical line.
 
 \section{How far the method goes}\label{sec:limits}
 
-The argument has three parameters: the window length $R$, the weight
-$\mu_0$, and the constant $c_0$, which is the minimum of $F_R$. Longer
-windows see more of the energy, and the local minima suggest that $R=9$
-with $\mu_0=\frac1{2400}$ would give about $0.67317$. The following
-proposition bounds what any $R$ can give.
+The argument has three parameters: the window length $R$, the weights,
+with linear total $\mu$, and the constant $c_0$, which is the minimum of
+$F$. Longer windows and better weights see more of the energy. With
+uniform weights the local minima of $F_R$ give about $0.67309$, $0.67313$
+and $0.67317$ for $R=7$, $8$ and $9$, while the weights of
+Table~\ref{tab:weights} reach $0.67321$ with $R=8$. The following
+proposition bounds what any window and any weights can give.
 
 \begin{proposition}\label{prop:limit}
 Let $(g_i)_{i\in\Z}$ be a periodic sequence of positive gaps with period
@@ -754,7 +834,8 @@ $p$ and mean $\bar g$, let $y$ be the corresponding points, and put
 \[
  e(g,\mu)=\mu\bar g+\frac2p\sum_{i=1}^p\sum_{j>i}w(y_j-y_i).
 \]
-If $F_R\ge c_0$ holds with $\mu=(R-1)\mu_0$, then $c_0\le e(g,\mu)$, and
+If $F\ge c_0$ holds for a system of weights with linear total $\mu$, then
+$c_0\le e(g,\mu)$, and
 the bound obtained in Sec.~\ref{sec:proof} is at most
 $(H_\MT-\mu)/(1-e(g,\mu))$.
 \end{proposition}
@@ -778,9 +859,14 @@ $e(g,\mu)$ by about $5\times10^{-5}$, more than the margins in the table.}
 The resulting bound stays below $0.67357$ for every $\mu\ge0$, with the
 largest value near $\mu=0.0061$, where the best pattern is the alternation
 $(1.036,1.964)$; for smaller $\mu$ gaps near $2$ take over, and for larger
-$\mu$ patterns with more gaps near $1$. So no window length improves
-Theorem~\ref{thm:main} by more than $0.0005$, and the approach cannot reach
-$67.36$ percent. Tilting
+$\mu$ patterns with more gaps near $1$. So no window length or choice of
+weights improves Theorem~\ref{thm:main} by more than $0.0004$, and the
+approach cannot reach $67.36$ percent. The proof of
+Proposition~\ref{prop:limit} uses only the pairs at most $R-1$ steps apart,
+so the double sum may be restricted to them; for $R=8$ and $\mu=0.0025$
+the restricted chain energy gives the limit $0.6732159$ for eight points,
+and the weights of Table~\ref{tab:weights} come within $2\times10^{-6}$ of
+it. Tilting
 the window, that is replacing $\cos(\sqrt2t)$ by $\cos(\alpha t)$, lowers
 $H_\MT$ faster than it raises the defect: at $R=7$ the best tilt,
 $\alpha=1.5$, gains $0.00004$.
@@ -833,12 +919,13 @@ Proposition~\ref{prop:block} are by hand. Proposition~\ref{prop:window} is
 verified by the rigorous computation described in Appendix~\ref{app:verify}.
 The repository \texttt{creelie/mh-phys} contains the \LaTeX{} source of this
 paper; the table of interval enclosures of $w$ in 128-bit ball arithmetic
-with its hash; the branch-and-bound verifier, in a serial and a parallel
-version, with the logs of the certified runs and a workflow that repeats the
+with its hash; the branch-and-bound verifier, in serial, parallel and weighted
+versions, with the weights of Table~\ref{tab:weights} and the logs of the certified runs and a workflow that repeats the
 certificate on every change; independent checks in ball and floating-point
 arithmetic of the eigenvalue bound, of the endpoint values in
 Appendix~\ref{app:details} and of the eigenvalues of lattices; the local
-minimisations for $R=7,8,9$; the chain energies of Table~\ref{tab:chain} and
+minimisations for $R=7,8,9$ and the linear programmes that choose the
+weights; the chain energies of Table~\ref{tab:chain} and
 their extension to every weight; the linear programmes behind the ceilings
 quoted in Sec.~\ref{sec:limits}; and the failure log of the search that led
 to the argument. The archive
@@ -921,52 +1008,55 @@ in $[0,\infty)$, where $\Psi$ is convex.
 
 \subsection{The table}
 
-For $c=0,1,\dots,45999$, a lower bound $\underline w_c$ for $w$ on the cell
+For $c=0,1,\dots,79999$, a lower bound $\underline w_c$ for $w$ on the cell
 $[c/4000,(c+1)/4000]$ is computed by evaluating~\eqref{eq:Kexplicit} on the
 cell as a ball in 128-bit arithmetic~\cite{Joh17}, taking the lower bound of
 $|k|$, rounding it down to a double, squaring, and rounding down again. On
-$[11.5,\infty)$ only $w\ge0$ is used. The table occupies $368{,}000$ bytes
-and has SHA-256 hash
-\texttt{8ea9e020\ldots}, recorded in full in the archive.
+$[20,\infty)$ only $w\ge0$ is used. The table occupies $640{,}000$ bytes
+and has SHA-256 hash \texttt{fd9304e3\ldots}; its first $46{,}000$ cells
+form the table of hash \texttt{8ea9e020\ldots}, used for the uniform
+weights. Both hashes are recorded in full in the archive.
 
 \subsection{Rounding}
 
 All floating-point operations of the verifier run in the rounding mode
 towards $-\infty$, on nonnegative quantities, so that every computed sum and
-product is a lower bound for the exact one. The target $\frac{13}{3125}$ is
-rounded up, $\mu_0/4000$ is rounded down, and the weights $2/(8-r)$ are
-rounded down.
+product is a lower bound for the exact one. The target $\frac{19}{4000}$ is
+rounded up; every weight, stored as a quotient of integers, is rounded
+down, and so is $b_i/4000$.
 
 \subsection{Reduction to a compact region}
 
-Let $C$ be the least integer with $(\mu_0/4000)\,C\ge\frac{13}{3125}$; here
-$C=53{,}249$. If the gaps lie in cells whose lower ends add up to at least
-$C$ cells, the linear term alone settles the inequality. On the rest, every
-single coordinate satisfies $\mu_0g_i+w(g_i)<\frac{13}{3125}$, since all
-other terms are nonnegative. Testing this cell by cell leaves two intervals
-of cells, $[3756,4877]$ and $[7080,53248]$, that is gaps in
-$[0.939,1.220]$ or in $[1.770,13.312]$. The $2^7=128$ products of these
-intervals are the initial boxes.
+If the lower ends $l_i$ of the cells that contain the gaps satisfy
+$\sum_i(b_i/4000)\,l_i\ge\frac{19}{4000}$, the linear term alone settles the
+inequality. In particular the gap $g_i$ is confined to the cells below
+$C_i$, the least integer with $(b_i/4000)\,C_i\ge\frac{19}{4000}$; here $C_1=C_7=71{,}349$, $C_2=C_6=52{,}227$, $C_3=C_5=50{,}789$ and $C_4=38{,}666$. Moreover
+every single gap satisfies $b_ig_i+a_{1,i-1}w(g_i)<\frac{19}{4000}$, since all other
+terms are nonnegative. Testing this cell by cell leaves two or three
+intervals of cells for each gap: $[3578,5370]$ and $[6460,71126]$ for $g_1$ and $g_7$; $[3717,4958]$ and $[6973,52201]$ for $g_2$ and $g_6$; $[3767,4855]$, $[7111,9809]$ and $[10098,49443]$ for $g_3$ and $g_5$; and $[3823,4752]$, $[7264,9254]$ and $[10700,37083]$ for $g_4$. The $432$ products of these intervals
+are the initial boxes.
 
 \subsection{Lower bound on a box}
 
 A box is a product of intervals of cells $[l_i,u_i]$, $i=1,\dots,7$. On it,
-$\mu_0\sum g_i\ge(\mu_0/4000)\sum l_i$, and the distance $y_{i+r}-y_i$ lies
+$\sum b_ig_i\ge\sum(b_i/4000)\,l_i$, and the distance $y_{i+r}-y_i$ lies
 in the union of the cells from $\sum l$ to $\sum(u+1)-1$ over the $r$ gaps
 involved. The minimum of $\underline w_c$ over that range of cells, found by
 a sparse table of range minima, bounds $w$ from below. Adding these bounds
-with their weights gives a lower bound for $F_8$ on the box. A box is
-discarded when this bound reaches $\frac{13}{3125}$; otherwise its widest
+with their weights gives a lower bound for $F$ on the box. A box is
+discarded when this bound reaches $\frac{19}{4000}$; otherwise its widest
 coordinate interval is halved. The verification fails if a box consisting
 of single cells is not discarded.
 
 \subsection{The run}
 
-The boxes are first split breadth-first until $222{,}858$ remain, and these
-are then processed depth-first, in parallel, with the rounding mode set
-in each thread. The search examined $10{,}039{,}560{,}518$ boxes in
-about a quarter of an hour on two processor cores and discarded all of
-them. The run for
+The boxes are first split breadth-first until $417{,}856$ remain, and these
+are then processed depth-first, in parallel, with the rounding mode set in
+each thread; a thread that runs out of boxes takes half of the stack of a
+busy one. The search examined $21{,}067{,}790{,}614$ boxes in about 26
+minutes on four threads of a four-core processor and discarded all of them. With uniform weights the same program
+certifies $F_8\ge\frac{13}{3125}$ for $\mu_0=\frac1{3200}$ after
+$10{,}039{,}560{,}518$ boxes, using the table of $46{,}000$ cells. The run for
 $\mu_0=\frac1{2000}$ and $c_0=\frac{605}{100000}$, made with the serial
 version, examined $5{,}440{,}924{,}378$ boxes. The same verifier reproduces
 the inequality of~\cite{Ain26} for $R=7$, $\mu_0=\frac1{3000}$,

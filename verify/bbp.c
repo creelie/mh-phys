@@ -71,16 +71,43 @@ int main(int argc, char **argv) {
   long nmine = 0; for (long j = sidx; j < nq; j += scnt) q[nmine++] = q[j];
   if (scnt > 1) printf("shard %ld/%ld: %ld work boxes\n", sidx, scnt, nmine);
   fflush(stdout);
-  long total_nodes = presplit_nodes; volatile int failed = 0; long done = 0;
+  /* Work sharing: a global pool holds boxes still to be searched.  Every thread searches depth first from a
+     box taken from the pool, and when some thread is idle it moves the older half of its stack (the larger boxes)
+     back to the pool.  The tree of boxes does not depend on the order, so the node count is deterministic. */
+  long total_nodes = presplit_nodes; volatile int failed = 0; volatile int nidle = 0; long shared_nodes = 0, next_report = 1000000000L;
+  long gcap = nmine > 1024 ? nmine : 1024, gn = nmine; Box *pool = malloc(gcap*sizeof(Box));
+  for (long j = 0; j < nmine; j++) pool[j] = q[nmine - 1 - j];      /* popped from the end: list order */
+  omp_lock_t lock; omp_init_lock(&lock);
   #pragma omp parallel reduction(+:total_nodes)
   { fesetround(FE_DOWNWARD);
-    long scap = 1L<<20; Box *st = malloc(scap*sizeof(Box));
-    #pragma omp for schedule(dynamic,1)
-    for (long j = 0; j < nmine; j++) {
-      if (failed) continue;
-      long top = 0; st[top++] = q[j];
+    int nth = omp_get_num_threads();
+    long scap = 1L<<20, top = 0, since = 0; Box *st = malloc(scap*sizeof(Box));
+    for (;;) {
+      int got = 0, quit = 0, counted = 0;
+      while (!got && !quit) {
+        omp_set_lock(&lock);
+        if (failed) quit = 1;
+        else if (gn > 0) { st[top++] = pool[--gn]; got = 1; if (counted) nidle--; }
+        else { if (!counted) { nidle++; counted = 1; } if (nidle == nth) quit = 1; }
+        omp_unset_lock(&lock); }
+      if (quit) break;
       while (top > 0 && !failed) {
         Box b = st[--top]; total_nodes++;
+        if (++since == (1L<<20)) { since = 0; long s2;
+          #pragma omp atomic capture
+          { shared_nodes += 1L<<20; s2 = shared_nodes; }
+          if (s2 >= next_report) {
+            #pragma omp critical
+            { if (s2 >= next_report) { printf("progress %ld nodes\n", s2); fflush(stdout); next_report += 1000000000L; } } }
+          int idle;
+          #pragma omp atomic read
+          idle = nidle;
+          if (idle > 0 && top >= 2) {
+            omp_set_lock(&lock); long h = top/2;
+            if (gn + h > gcap) { while (gn + h > gcap) gcap *= 2; pool = realloc(pool, gcap*sizeof(Box)); }
+            for (long j = 0; j < h; j++) pool[gn++] = st[j];
+            for (long j = h; j < top; j++) st[j - h] = st[j]; top -= h;
+            omp_unset_lock(&lock); } }
         double lb = lower(&b); if (lb >= T) continue;
         int w = widest(&b);
         if (w < 0) {
@@ -90,14 +117,9 @@ int main(int argc, char **argv) {
         int mid = (b.lo[w] + b.hi[w]) / 2; Box c = b; b.hi[w] = mid; c.lo[w] = mid + 1;
         if (top + 2 >= scap) { scap *= 2; st = realloc(st, scap*sizeof(Box)); }
         st[top++] = b; st[top++] = c; }
-      long d;
-      #pragma omp atomic capture
-      d = ++done;
-      if (d % (nmine/20 > 0 ? nmine/20 : 1) == 0) {
-        #pragma omp critical
-        { printf("progress %ld/%ld work boxes\n", d, nmine); fflush(stdout); } }
-    }
+      if (failed) break; }
     free(st); }
+  omp_destroy_lock(&lock);
   if (failed) return 1;
   if (scnt > 1) printf("VERIFIED SHARD %ld/%ld R=%d: F >= %ld/%ld with mu0=%ld/%ld on %ld of %ld work boxes (checksum=%016llx); grid=%d threads=%d nodes=%ld\n",
                        sidx, scnt, R, tn, td, mn, md, nmine, nq, hsum, G, omp_get_max_threads(), total_nodes);

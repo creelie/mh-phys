@@ -1,7 +1,7 @@
 {
   "title": "More Than 67.31 Percent of the Zeta Zeros Are Simple and on the Critical Line",
   "upload_type": "software",
-  "description": "Paper (REVTeX source and PDF) and verification code. We prove that more than 67.31 percent of the nontrivial zeros of the Riemann zeta function, counted with multiplicity, are simple and lie on the critical line: liminf N_0^s(T,2T)/N(T,2T) >= (3125/3112)(H - 7/3200) = 0.6731133552, where H = 0.6725007 is the Montgomery-Taylor constant. The new ingredient is a sharp bound for the largest eigenvalue of the overlap matrix of zeros at mutual distance at least 11/20, which lets long blocks of zeros be used in full. One inequality for eight consecutive zeros is verified by branch and bound in interval arithmetic (10,039,560,518 nodes), over a table of kernel bounds computed in 128-bit ball arithmetic. No window length lifts the method above 0.6736. The Riemann hypothesis is not proved and the result does not bear on it. The route was found with the learn-from-failure protocol of the BLLM engine Anaxia (creelie/eBLLM, release 3.0.5, doi:10.5281/zenodo.23469389).",
+  "description": "Paper (REVTeX source and PDF) and verification code. We prove that more than 67.31 percent of the nontrivial zeros of the Riemann zeta function, counted with multiplicity, are simple and lie on the critical line: liminf N_0^s(T,2T)/N(T,2T) >= (4000/3981)(H - 12499/5000000) = 0.6731985970, where H = 0.6725007 is the Montgomery-Taylor constant (release 1.0.0 gave 0.6731133552). The ingredients are a sharp bound for the largest eigenvalue of the overlap matrix of zeros at mutual distance at least 11/20, which lets long blocks of zeros be used in full, and a window inequality for eight consecutive zeros in which every pair and every gap carries its own weight, chosen by linear programming. The inequality is verified by branch and bound in interval arithmetic (21,067,790,614 nodes), over a table of kernel bounds computed in 128-bit ball arithmetic. No weights for eight zeros give more than 0.6732159, and no window length or weights lift the method above 0.67357. The Riemann hypothesis is not proved and the result does not bear on it. The route was found with the learn-from-failure protocol of the BLLM engine Anaxia (creelie/eBLLM, release 3.0.5, doi:10.5281/zenodo.23469389).",
   "creators": [
     {
       "name": "Bhattacharjee, Deep",
@@ -22,9 +22,22 @@
     "rank-trace inequality"
   ],
   "related_identifiers": [
-    {"identifier": "10.5281/zenodo.23469389", "relation": "references", "scheme": "doi"},
-    {"identifier": "arXiv:2608.13637", "relation": "references", "scheme": "arxiv"}
+    {
+      "identifier": "10.5281/zenodo.23469389",
+      "relation": "references",
+      "scheme": "doi"
+    },
+    {
+      "identifier": "arXiv:2608.13637",
+      "relation": "references",
+      "scheme": "arxiv"
+    },
+    {
+      "identifier": "10.5281/zenodo.23480715",
+      "relation": "isNewVersionOf",
+      "scheme": "doi"
+    }
   ],
   "access_right": "open",
-  "version": "1.0.0"
+  "version": "1.1.0"
 }
