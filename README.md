@@ -77,7 +77,7 @@ python3 checks/eig_lemma.py
 The certificate takes about 15 minutes on two cores. The workflow
 `.github/workflows/verify.yml` rebuilds both tables and repeats it on every
 push. Longer windows are certified by `.github/workflows/farm.yml`, which
-splits the same search into shards across runners (`bbp … target index count`);
+splits the same search into shards across runners, two at a time by default (`bbp … target index count`);
 every shard rebuilds the same list of work boxes and prints its checksum, and
 the last job checks that all shards verified the same list.
 

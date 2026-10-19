@@ -12,6 +12,7 @@ on:
       target: {description: "presplit target", required: true, default: "2000000"}
       shards: {description: "number of shards (at most 256)", required: true, default: "64"}
       table: {description: "table of lower bounds of w", required: true, default: "verify/w4000_80k.bin"}
+      parallel: {description: "shards running at once (the account shares at most 20 jobs across all repositories)", required: true, default: "2"}
 permissions:
   contents: read
 jobs:
@@ -29,6 +30,7 @@ jobs:
     timeout-minutes: 340
     strategy:
       fail-fast: true
+      max-parallel: ${{ fromJSON(inputs.parallel) }}
       matrix:
         i: ${{ fromJSON(needs.plan.outputs.idx) }}
     steps:
