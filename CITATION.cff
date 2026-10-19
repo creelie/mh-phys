@@ -23,4 +23,7 @@ identifiers:
   - type: doi
     value: 10.5281/zenodo.23483313
     description: "Release 1.1.0"
+  - type: doi
+    value: 10.5281/zenodo.23484951
+    description: "Release 1.2.0"
 license: MIT
