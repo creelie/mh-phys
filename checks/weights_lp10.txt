@@ -1,0 +1,60 @@
+# python3 -I weights_lp.py 10 0.004 45 0.2 4, stopped by the job time limit after round 32; resumed from ww_R10_mu0.004.npz with python3 -I weights_lp.py 10 0.004 13 0.2 4 (46 rounds in all)
+uniform: c0=0.0069096 bound=0.6731519 at (np.float64(1.0439), np.float64(1.9742), np.float64(1.0392), np.float64(1.9701), np.float64(1.0385), np.float64(1.9701), np.float64(1.0392), np.float64(1.9742), np.float64(1.0439))
+it 0: LP c=0.0073354 true min=0.0041296 bound=0.6712728  best=0.6731519
+it 1: LP c=0.0073333 true min=0.0052865 bound=0.6720535  best=0.6731519
+it 2: LP c=0.0073299 true min=0.0053115 bound=0.6720704  best=0.6731519
+it 3: LP c=0.0073237 true min=0.0052098 bound=0.6720017  best=0.6731519
+it 4: LP c=0.0073201 true min=0.0059115 bound=0.6724760  best=0.6731519
+it 5: LP c=0.0073151 true min=0.0061004 bound=0.6726039  best=0.6731519
+it 6: LP c=0.0073032 true min=0.0064429 bound=0.6728357  best=0.6731519
+it 7: LP c=0.0072804 true min=0.0064409 bound=0.6728344  best=0.6731519
+it 8: LP c=0.0072613 true min=0.0059594 bound=0.6725085  best=0.6731519
+it 9: LP c=0.0072601 true min=0.0065098 bound=0.6728810  best=0.6731519
+it 10: LP c=0.0072536 true min=0.0067104 bound=0.6730169  best=0.6731519
+it 11: LP c=0.0072531 true min=0.0068221 bound=0.6730926  best=0.6731519
+it 12: LP c=0.0072420 true min=0.0067872 bound=0.6730690  best=0.6731519
+it 13: LP c=0.0072296 true min=0.0068995 bound=0.6731451  best=0.6731519
+it 14: LP c=0.0072262 true min=0.0068726 bound=0.6731268  best=0.6731519
+it 15: LP c=0.0072224 true min=0.0069822 bound=0.6732011  best=0.6732011
+it 16: LP c=0.0072088 true min=0.0069751 bound=0.6731963  best=0.6732011
+it 17: LP c=0.0072019 true min=0.0070648 bound=0.6732571  best=0.6732571
+it 18: LP c=0.0071809 true min=0.0069135 bound=0.6731546  best=0.6732571
+it 19: LP c=0.0071775 true min=0.0070345 bound=0.6732366  best=0.6732571
+it 20: LP c=0.0071693 true min=0.0069478 bound=0.6731778  best=0.6732571
+it 21: LP c=0.0071609 true min=0.0070395 bound=0.6732400  best=0.6732571
+it 22: LP c=0.0071582 true min=0.0068070 bound=0.6730824  best=0.6732571
+it 23: LP c=0.0071558 true min=0.0070503 bound=0.6732473  best=0.6732571
+it 24: LP c=0.0071520 true min=0.0069950 bound=0.6732098  best=0.6732571
+it 25: LP c=0.0071507 true min=0.0070726 bound=0.6732624  best=0.6732624
+it 26: LP c=0.0071421 true min=0.0070761 bound=0.6732648  best=0.6732648
+it 27: LP c=0.0071373 true min=0.0070289 bound=0.6732328  best=0.6732648
+it 28: LP c=0.0071366 true min=0.0070904 bound=0.6732745  best=0.6732745
+it 29: LP c=0.0071320 true min=0.0070581 bound=0.6732526  best=0.6732745
+it 30: LP c=0.0071313 true min=0.0071007 bound=0.6732815  best=0.6732815
+it 31: LP c=0.0071274 true min=0.0070433 bound=0.6732425  best=0.6732815
+it 32: LP c=0.0071265 true min=0.0070693 bound=0.6732602  best=0.6732815
+resumed: 1110 cuts, best c=0.0071007
+it 0: LP c=0.0071250 true min=0.0071051 bound=0.6732845  best=0.6732845
+it 1: LP c=0.0071204 true min=0.0070896 bound=0.6732740  best=0.6732845
+it 2: LP c=0.0071184 true min=0.0070999 bound=0.6732809  best=0.6732845
+it 3: LP c=0.0071183 true min=0.0070961 bound=0.6732784  best=0.6732845
+it 4: LP c=0.0071180 true min=0.0070885 bound=0.6732732  best=0.6732845
+it 5: LP c=0.0071176 true min=0.0071064 bound=0.6732853  best=0.6732853
+it 6: LP c=0.0071163 true min=0.0071081 bound=0.6732865  best=0.6732865
+it 7: LP c=0.0071159 true min=0.0070969 bound=0.6732789  best=0.6732865
+it 8: LP c=0.0071158 true min=0.0071089 bound=0.6732871  best=0.6732871
+it 9: LP c=0.0071156 true min=0.0071133 bound=0.6732900  best=0.6732900
+it 10: LP c=0.0071152 true min=0.0071059 bound=0.6732850  best=0.6732900
+it 11: LP c=0.0071150 true min=0.0071116 bound=0.6732889  best=0.6732900
+it 12: LP c=0.0071150 true min=0.0071106 bound=0.6732882  best=0.6732900
+best: c=0.00711331 bound=0.67329002
+b/mu = [0.0653 0.1108 0.1137 0.1405 0.1396 0.1405 0.1137 0.1108 0.0653]
+a_1 = [0.1176 0.2018 0.2322 0.2926 0.3116 0.2926 0.2322 0.2018 0.1176]
+a_2 = [-0.      0.2333  0.2463  0.5204  0.5204  0.2463  0.2333  0.    ]
+a_3 = [-0.     -0.      0.7056  0.5889  0.7056  0.      0.    ]
+a_4 = [ 1. -0. -0.  0.  0.  1.]
+a_5 = [0.3225 0.6775 0.     0.6775 0.3225]
+a_6 = [ 1. -0.  0.  1.]
+a_7 = [-0.  2.  0.]
+a_8 = [1. 1.]
+a_9 = [2.]

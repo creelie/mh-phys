@@ -30,8 +30,17 @@ jobs:
           gcc -O2 -frounding-math -fopenmp -o bbp verify/bbp.c -lm
           OMP_NUM_THREADS=$(nproc) ./bbp 8 4000 verify/w4000.bin 1 3200 13 3125 | tee run.log
           grep -q '^VERIFIED R=8' run.log
-      - name: Branch and bound, nine zeros, weights of Table I, c0 = 7/1000
+      - name: Branch and bound, nine zeros, weights of release 1.2.0, c0 = 7/1000
         run: |
           gcc -O2 -frounding-math -fopenmp -o bbp_ww verify/bbp_ww.c -lm
           OMP_NUM_THREADS=$(nproc) ./bbp_ww 9 4000 verify/w4000_80k.bin verify/weights9.txt 7 1000 2000000 | grep -v '^progress' | tee runw.log
           grep -q '^VERIFIED R=9' runw.log
+      - name: Rebuild the second-order tables and compare them with the stored one
+        run: |
+          python3 -I verify/dtable.py 4000 80000 4 d80k_check.bin
+          cmp d80k_check.bin verify/d4000_80k.bin
+      - name: Branch and bound, ten zeros, weights of Table I, c0 = 889/125000
+        run: |
+          gcc -O2 -frounding-math -fopenmp -o bbp_cf verify/bbp_cf.c -lm
+          OMP_NUM_THREADS=$(nproc) ./bbp_cf 10 4000 verify/w4000_80k.bin verify/d4000_80k.bin verify/weights10.txt 889 125000 | grep -v '^progress' | tee run10.log
+          grep -q '^VERIFIED R=10: F >= 889/125000' run10.log
